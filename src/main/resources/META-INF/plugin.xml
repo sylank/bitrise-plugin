@@ -20,6 +20,9 @@
         <projectConfigurable
                 instance="io.bitrise.plugins.form.Settings">
         </projectConfigurable>
+
+        <toolWindow id="Bitrise" secondary="true" icon="AllIcons.General.Modified" anchor="bottom"
+                    factoryClass="io.bitrise.plugins.form.BuildListFactory"/>
     </extensions>
 
     <project-components>
