@@ -21,7 +21,7 @@
                 instance="io.bitrise.plugins.window.Settings">
         </projectConfigurable>
 
-        <toolWindow id="Bitrise" secondary="true" icon="AllIcons.General.Modified" anchor="bottom"
+        <toolWindow id="Bitrise" secondary="false" icon="AllIcons.General.Modified" anchor="bottom"
                     factoryClass="io.bitrise.plugins.window.BitriseToolWindowFactory"/>
     </extensions>
 
