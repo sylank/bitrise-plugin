@@ -1,17 +1,19 @@
-package io.bitrise.plugins.form;
+package io.bitrise.plugins.window;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
-import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
+import io.bitrise.plugins.window.build.list.BuildListWindow;
+import io.bitrise.plugins.window.local.workflow.LocalWorkflowsWindow;
 import org.jetbrains.annotations.NotNull;
 
-public class BuildListFactory implements ToolWindowFactory {
+public class BitriseToolWindowFactory implements com.intellij.openapi.wm.ToolWindowFactory {
+
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
         BuildListWindow myToolWindow = new BuildListWindow(toolWindow);
-        testgui myToolWindow2 = new testgui(toolWindow);
+        LocalWorkflowsWindow myToolWindow2 = new LocalWorkflowsWindow(toolWindow);
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
 
         Content content = contentFactory.createContent(myToolWindow.getContent(), "Build list", false);

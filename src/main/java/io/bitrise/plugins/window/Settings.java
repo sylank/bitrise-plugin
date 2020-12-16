@@ -1,7 +1,6 @@
-package io.bitrise.plugins.form;
+package io.bitrise.plugins.window;
 
 import com.intellij.openapi.options.Configurable;
-import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.project.Project;
 
 import io.bitrise.plugins.component.PluginSettings;
