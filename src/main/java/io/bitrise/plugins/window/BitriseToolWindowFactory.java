@@ -4,7 +4,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
-import io.bitrise.plugins.window.build.list.BuildListWindow;
+import io.bitrise.plugins.window.app.list.BuildListWindow;
 import io.bitrise.plugins.window.local.workflow.LocalWorkflowsWindow;
 import org.jetbrains.annotations.NotNull;
 
