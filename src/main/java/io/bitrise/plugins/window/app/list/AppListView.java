@@ -1,5 +1,8 @@
 package io.bitrise.plugins.window.app.list;
 
+import com.intellij.ui.JBColor;
+import io.bitrise.plugins.model.App;
+import io.bitrise.plugins.model.Build;
 import io.bitrise.plugins.window.PluginView;
 
 import javax.swing.*;
@@ -10,13 +13,15 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Path2D;
+import java.util.List;
 
 public class AppListView extends JPanel implements PluginView {
-    public AppListView() {
+    private List<App> apps;
+
+    public AppListView(List<App> apps) {
+        this.apps = apps;
+
         setLayout(new BorderLayout());
-        setBackground(Color.red);
     }
 
     @Override
@@ -38,26 +43,15 @@ public class AppListView extends JPanel implements PluginView {
         });
         UIManager.put("Tree.expandedIcon", emptyIcon);
         UIManager.put("Tree.collapsedIcon", emptyIcon);
-        //UIManager.put("Tree.closedIcon",    emptyIcon);
-        //UIManager.put("Tree.openIcon",      emptyIcon);
-        UIManager.put("Tree.paintLines", Boolean.FALSE);
+        UIManager.put("Tree.paintLines", Boolean.TRUE);
+        UIManager.put("Tree.lineStyle", "Horizontal");
 
-        UIDefaults d = new UIDefaults();
-        d.put("Tree:TreeCell[Enabled+Selected].backgroundPainter", new Painter<JComponent>() {
-            @Override
-            public void paint(Graphics2D g, JComponent c, int w, int h) {
-                g.setPaint(Color.GREEN.darker());
-                g.fillRect(0, 0, w, h);
-            }
-        });
 
         JTree tree = new JTree(makeModel());
         tree.setCellRenderer(new TestTreeCellRenderer());
-        //tree.setRowHeight(0);
+        tree.setRowHeight(0);
         tree.setRootVisible(false);
-        tree.setShowsRootHandles(false);
-        tree.setBackground(Color.WHITE);
-        tree.putClientProperty("Nimbus.Overrides", d);
+        tree.setShowsRootHandles(true);
         tree.putClientProperty("Nimbus.Overrides.InheritDefaults", false);
 
         JScrollPane jScrollPane = new JScrollPane(tree);
@@ -66,35 +60,28 @@ public class AppListView extends JPanel implements PluginView {
     }
 
     private TreeModel makeModel() {
-        Dimension d64 = new Dimension(64, 64);
-        Dimension d32 = new Dimension(32, 32);
-        Dimension d24 = new Dimension(24, 24);
+        Dimension d64 = new Dimension(16, 16);
+        Dimension d32 = new Dimension(16, 48);
+
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Root");
-        DefaultMutableTreeNode set1 = new DefaultMutableTreeNode(
-                new TestNode("SubCategory 1", Color.ORANGE, d64, false));
-        set1.add(new DefaultMutableTreeNode(
-                new TestNode("SubSubCategory 1", Color.ORANGE, d32, true)));
-        set1.add(new DefaultMutableTreeNode(
-                new TestNode("SubSubCategory 2", Color.CYAN.darker(), d32, true)));
-        set1.add(new DefaultMutableTreeNode(
-                new TestNode("SubSubCategory 3", Color.GREEN, d32, true)));
-        DefaultMutableTreeNode set2 = new DefaultMutableTreeNode(
-                new TestNode("SubCategory 2", Color.GREEN.darker().darker(), d64, false));
-        DefaultMutableTreeNode set3 = new DefaultMutableTreeNode(
-                new TestNode("SubSubCategory 5", Color.GREEN, d32, false));
-        set3.add(new DefaultMutableTreeNode(
-                new TestNode("SubSubSubCategory 1", Color.BLUE, d24, true)));
-        set3.add(new DefaultMutableTreeNode(
-                new TestNode("SubSubSubCategory 2", Color.GREEN, d24, true)));
-        set3.add(new DefaultMutableTreeNode(
-                new TestNode("SubSubSubCategory 3", Color.ORANGE.darker(), d24, true)));
-        set2.add(new DefaultMutableTreeNode(
-                new TestNode("SubSubCategory 4", Color.ORANGE.darker().darker(), d32, true)));
-        set2.add(set3);
-        set2.add(new DefaultMutableTreeNode(
-                new TestNode("SubSubCategory 6", Color.ORANGE, d32, true)));
-        root.add(set1);
-        root.add(set2);
+
+        this.apps.forEach(app -> {
+            Color appStatusColor = JBColor.DARK_GRAY;
+            if (app.getBuilds().size() > 0) {
+                appStatusColor = app.getBuilds().get(0).getStatusColor();
+            }
+
+            DefaultMutableTreeNode set1 = new DefaultMutableTreeNode(
+                    new NodeIcon(app.getName(), appStatusColor, d64, false, null));
+
+            app.getBuilds().forEach(build -> {
+                set1.add(new DefaultMutableTreeNode(
+                        new NodeIcon("", build.getStatusColor(), d32, true, build)));
+            });
+
+            root.add(set1);
+        });
+
         return new DefaultTreeModel(root);
     }
 
@@ -105,83 +92,157 @@ public class AppListView extends JPanel implements PluginView {
                 boolean leaf, int row, boolean hasFocus) {
             JLabel l = (JLabel) super.getTreeCellRendererComponent(
                     tree, value, selected, expanded, leaf, row, hasFocus);
+
             if (value instanceof DefaultMutableTreeNode) {
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
                 Object uo = node.getUserObject();
-                if (uo instanceof TestNode) {
-                    TestNode i = (TestNode) uo;
-                    l.setForeground(Color.BLACK);
-                    l.setIcon(new TestNode(i.title, i.color, i.dim, leaf, expanded));
+                if (uo instanceof NodeIcon) {
+                    NodeIcon i = (NodeIcon) uo;
+                    l.setIcon(new NodeIcon(i.title, i.color, i.dim, leaf, expanded));
 
                     int indent = 0;
                     TreeNode parent = node.getParent();
                     while (parent instanceof DefaultMutableTreeNode) {
                         DefaultMutableTreeNode pn = (DefaultMutableTreeNode) parent;
-                        if (pn.getUserObject() instanceof TestNode) {
-                            TestNode pi = (TestNode) pn.getUserObject();
+                        if (pn.getUserObject() instanceof NodeIcon) {
+                            NodeIcon pi = (NodeIcon) pn.getUserObject();
                             indent += pi.dim.width / 2;
                         }
                         parent = pn.getParent();
                     }
                     l.setBorder(BorderFactory.createEmptyBorder(2, indent, 2, 5));
+
+                    if (i.build != null) {
+                        JLabel colorLabel = new JLabel();
+                        colorLabel.setIcon(new NodeIcon(i.title, i.color, i.dim, leaf, expanded));
+                        colorLabel.setBorder(BorderFactory.createEmptyBorder(2, indent, 2, 5));
+
+                        JPanel infoPanel = new JPanel(new BorderLayout());
+
+                        JPanel separator = new JPanel();
+                        separator.setBackground(JBColor.DARK_GRAY);
+                        separator.setPreferredSize(new Dimension(0, 2));
+
+                        infoPanel.add(separator, BorderLayout.CENTER);
+
+                        FlowLayout majorLayout = new FlowLayout();
+                        majorLayout.setAlignment(FlowLayout.LEFT);
+                        JPanel majorInfoPanel = new JPanel(majorLayout);
+
+                        JLabel statusLabel = new JLabel(i.build.getStatusText());
+                        statusLabel.setForeground(i.build.getStatusColor());
+                        Dimension d = statusLabel.getPreferredSize();
+                        d.width = 150;
+                        statusLabel.setPreferredSize(d);
+
+                        JPanel branchPanel = new JPanel(majorLayout);
+                        Dimension bdim = branchPanel.getPreferredSize();
+                        bdim.width = 200;
+                        bdim.height = 25;
+                        branchPanel.setPreferredSize(bdim);
+
+                        JLabel fromLabel = new JLabel(i.build.getFromBranch());
+                        fromLabel.setBackground(JBColor.CYAN);
+                        fromLabel.setOpaque(true);
+
+                        JLabel arrow = new JLabel("->");
+                        if (i.build.isPr()) {
+                            arrow.setText("@");
+                        }
+
+                        JLabel toLabel = new JLabel(i.build.getToBranch());
+                        toLabel.setBackground(JBColor.ORANGE);
+                        toLabel.setOpaque(true);
+
+                        branchPanel.add(fromLabel);
+                        branchPanel.add(arrow);
+                        branchPanel.add(toLabel);
+
+                        JLabel commitMessage = new JLabel(i.build.getCommitMessage());
+                        Dimension dCommit = commitMessage.getPreferredSize();
+                        dCommit.width = 400;
+                        commitMessage.setPreferredSize(dCommit);
+
+                        JPanel minorInfoPanel = new JPanel(majorLayout);
+
+                        JLabel triggeredAtLabel = new JLabel(i.build.getTriggeredAt());
+                        Dimension dTriggeredAt = triggeredAtLabel.getPreferredSize();
+                        dTriggeredAt.width = 300;
+                        triggeredAtLabel.setPreferredSize(dCommit);
+
+                        JLabel runtimeLabel = new JLabel(i.build.getRunTime());
+                        Dimension dRuntime = runtimeLabel.getPreferredSize();
+                        dRuntime.width = 100;
+                        runtimeLabel.setPreferredSize(dRuntime);
+
+                        JLabel slugLabel = new JLabel("#" + i.build.getBuildSlug());
+                        Dimension dSlug = slugLabel.getPreferredSize();
+                        dSlug.width = 200;
+                        slugLabel.setPreferredSize(dSlug);
+
+                        minorInfoPanel.add(triggeredAtLabel);
+                        minorInfoPanel.add(runtimeLabel);
+                        minorInfoPanel.add(slugLabel);
+
+                        majorInfoPanel.add(statusLabel);
+                        majorInfoPanel.add(branchPanel);
+                        majorInfoPanel.add(commitMessage);
+                        infoPanel.add(majorInfoPanel, BorderLayout.NORTH);
+                        infoPanel.add(minorInfoPanel, BorderLayout.SOUTH);
+
+                        JPanel mainPanel = new JPanel(new BorderLayout());
+                        mainPanel.add(colorLabel, BorderLayout.WEST);
+                        mainPanel.add(infoPanel, BorderLayout.CENTER);
+
+                        majorInfoPanel.setOpaque(false);
+                        mainPanel.setOpaque(false);
+                        infoPanel.setOpaque(false);
+                        minorInfoPanel.setOpaque(false);
+                        branchPanel.setOpaque(false);
+
+                        if (selected) {
+                            arrow.setForeground(JBColor.white);
+                            commitMessage.setForeground(JBColor.white);
+                            triggeredAtLabel.setForeground(JBColor.white);
+                            separator.setBackground(JBColor.white);
+                            runtimeLabel.setForeground(JBColor.white);
+                            slugLabel.setForeground(JBColor.white);
+                        }
+
+                        return mainPanel;
+                    }
                 }
             }
             return l;
         }
+
+
     }
 
-    class TestNode implements Icon {
-        public final String title;
-        public final Color color;
-        public final Dimension dim;
-        private final boolean expanded;
-        private final boolean leaf;
-        private int GAP = 4;
+    class NodeIcon implements Icon {
+        private final String title;
+        private final Color color;
+        private final Dimension dim;
+        private int GAP = 0;
+        private Build build;
 
-        //public TestNode(String title, ImageIcon img, Dimension dim) {
-        public TestNode(String title, Color color, Dimension dim, boolean leaf) {
+        public NodeIcon(String title, Color color, Dimension dim, boolean leaf, Build build) {
             this(title, color, dim, leaf, false);
+
+            this.build = build;
         }
 
-        public TestNode(String title, Color color, Dimension dim,
+        public NodeIcon(String title, Color color, Dimension dim,
                         boolean leaf, boolean expanded) {
             this.title = title;
             this.color = color;
             this.dim = dim;
-            this.expanded = expanded;
-            this.leaf = leaf;
         }
 
         @Override
         public void paintIcon(Component c, Graphics g, int x, int y) {
             g.setColor(color);
-            g.fillRect(x + GAP, y + GAP, dim.width - GAP - GAP, dim.height - GAP - GAP);
-            if (dim.width < 64) {
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                        RenderingHints.VALUE_ANTIALIAS_ON);
-                int w6 = dim.width / 12;
-                int w3 = dim.width / 6;
-                g2.setColor(Color.WHITE);
-                g2.setStroke(new BasicStroke(w6));
-                Point pt = new Point(x + dim.width / 2, y + dim.height / 2);
-                Path2D path = new Path2D.Double();
-                path.moveTo(pt.x - w6, pt.y - w3);
-                path.lineTo(pt.x + w6, pt.y);
-                path.lineTo(pt.x - w6, pt.y + w3);
-                int numquadrants;
-                if (leaf) {
-                    numquadrants = 0;
-                } else if (expanded) {
-                    numquadrants = 3;
-                } else {
-                    numquadrants = 1;
-                }
-                AffineTransform at = AffineTransform.getQuadrantRotateInstance(
-                        numquadrants, pt.x, pt.y);
-                g2.draw(at.createTransformedShape(path));
-                g2.dispose();
-            }
+            g.fillRoundRect(x + GAP, y + GAP, dim.width - GAP - GAP, dim.height - GAP - GAP, 5,5);
         }
 
         @Override
