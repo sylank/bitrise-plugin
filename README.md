@@ -1,0 +1,1 @@
+# Bitrise IntelliJ/Android Studio plugin
