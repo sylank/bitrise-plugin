@@ -61,7 +61,7 @@ public class AppListView extends JPanel implements PluginView {
 
     private TreeModel makeModel() {
         Dimension d64 = new Dimension(16, 16);
-        Dimension d32 = new Dimension(16, 48);
+        Dimension d32 = new Dimension(16, 54);
 
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Root");
 
@@ -132,12 +132,12 @@ public class AppListView extends JPanel implements PluginView {
                         JLabel statusLabel = new JLabel(i.build.getStatusText());
                         statusLabel.setForeground(i.build.getStatusColor());
                         Dimension d = statusLabel.getPreferredSize();
-                        d.width = 150;
+                        d.width = 80;
                         statusLabel.setPreferredSize(d);
 
                         JPanel branchPanel = new JPanel(majorLayout);
                         Dimension bdim = branchPanel.getPreferredSize();
-                        bdim.width = 200;
+                        bdim.width = 250;
                         bdim.height = 25;
                         branchPanel.setPreferredSize(bdim);
 
@@ -167,8 +167,8 @@ public class AppListView extends JPanel implements PluginView {
 
                         JLabel triggeredAtLabel = new JLabel(i.build.getTriggeredAt());
                         Dimension dTriggeredAt = triggeredAtLabel.getPreferredSize();
-                        dTriggeredAt.width = 300;
-                        triggeredAtLabel.setPreferredSize(dCommit);
+                        dTriggeredAt.width = 200;
+                        triggeredAtLabel.setPreferredSize(dTriggeredAt);
 
                         JLabel runtimeLabel = new JLabel(i.build.getRunTime());
                         Dimension dRuntime = runtimeLabel.getPreferredSize();

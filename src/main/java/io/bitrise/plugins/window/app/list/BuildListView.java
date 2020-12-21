@@ -60,9 +60,10 @@ public class BuildListView extends JPanel {
                 "2",
                 "5fs35gs");
 
-        App app = new App("Test app 1", asList(build1, build2,build3,build4));
+        App app = new App("MyApp", asList(build1, build2,build3,build4));
+        App app2 = new App("MyApp#2", asList(build2,build3,build4));
 
-        AppListView appListPanel = new AppListView(Collections.singletonList(app));
+        AppListView appListPanel = new AppListView(asList(app, app2));
         appListPanel.renderView();
 
         add(actionPanel, BorderLayout.NORTH);
