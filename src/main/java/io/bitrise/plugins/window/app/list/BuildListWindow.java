@@ -23,9 +23,9 @@ public class BuildListWindow {
 
     private JComponent createMainPanel() {
         BuildListView buildListView = new BuildListView();
-        BuildDetailsVew buildDetailsVew = new BuildDetailsVew();
+        BuildDetailsView buildDetailsView = new BuildDetailsView();
 
-        JSplitPane splitPane = new JSplitPane(SwingConstants.VERTICAL, buildListView, buildDetailsVew);
+        JSplitPane splitPane = new JSplitPane(SwingConstants.VERTICAL, buildListView, buildDetailsView);
         splitPane.setResizeWeight(0.5);
         return splitPane;
     }

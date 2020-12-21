@@ -2,7 +2,6 @@ package io.bitrise.plugins.window;
 
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.project.Project;
-
 import io.bitrise.plugins.component.PluginSettings;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
@@ -16,7 +15,7 @@ import javax.swing.event.DocumentListener;
 public class Settings implements DocumentListener, Configurable, ChangeListener {
     private Project project;
     private JPasswordField tokenField = new JPasswordField();
-    private JSpinner refreshSpinner = new JSpinner(new SpinnerNumberModel(10, 10, 100,1));
+    private JSpinner refreshSpinner = new JSpinner(new SpinnerNumberModel(10, 10, 100, 1));
 
     private boolean modified = false;
 
@@ -32,7 +31,7 @@ public class Settings implements DocumentListener, Configurable, ChangeListener 
     @Override
     public @Nullable JComponent createComponent() {
         JPanel mainPanel = new JPanel();
-        mainPanel.setBounds(0,0, 450, 120);
+        mainPanel.setBounds(0, 0, 450, 120);
         mainPanel.setLayout(null);
 
         JLabel lblUsername = new JLabel("Access token:");
@@ -68,7 +67,7 @@ public class Settings implements DocumentListener, Configurable, ChangeListener 
     public void apply() {
         PluginSettings config = PluginSettings.getInstance(project);
         config.setAccessToken(tokenField.getText());
-        config.setRefreshIntervalInSec((int)refreshSpinner.getValue());
+        config.setRefreshIntervalInSec((int) refreshSpinner.getValue());
 
         modified = false;
     }

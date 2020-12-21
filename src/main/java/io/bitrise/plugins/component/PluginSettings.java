@@ -8,7 +8,7 @@ import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-@State(name = "PluginSettings", storages = { @Storage(value = "pluginConfiguration.xml") } )
+@State(name = "PluginSettings", storages = {@Storage(value = "pluginConfiguration.xml")})
 public class PluginSettings implements PersistentStateComponent<PluginSettings> {
 
     private String accessToken = "";

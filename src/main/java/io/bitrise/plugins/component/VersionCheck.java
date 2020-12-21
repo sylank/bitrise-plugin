@@ -11,7 +11,7 @@ import com.intellij.openapi.components.Storage;
 import com.intellij.openapi.extensions.PluginId;
 import com.intellij.util.xmlb.annotations.Attribute;
 
-@State(name = "VersionCheck", storages = { @Storage(value = "versionCheck.xml") } )
+@State(name = "VersionCheck", storages = {@Storage(value = "versionCheck.xml")})
 public class VersionCheck implements BaseComponent {
 
     @Attribute

@@ -10,6 +10,7 @@ public class BuildListView extends JPanel {
 
         JPanel actionPanel = createActionPanel();
         AppListView appListPanel = new AppListView();
+        appListPanel.renderView();
 
         add(actionPanel, BorderLayout.NORTH);
         add(appListPanel, BorderLayout.CENTER);
