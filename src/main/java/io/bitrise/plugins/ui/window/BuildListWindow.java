@@ -1,13 +1,11 @@
 package io.bitrise.plugins.ui.window;
 
 import io.bitrise.plugins.service.AppService;
-import io.bitrise.plugins.ui.model.App;
+import io.bitrise.plugins.ui.window.view.builds.AppDetailsView;
 import io.bitrise.plugins.ui.window.view.builds.BuildDetailsView;
-import io.bitrise.plugins.ui.window.view.builds.BuildListView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
 public class BuildListWindow implements PluginWindow {
     private JPanel myToolWindowContent;
@@ -29,17 +27,13 @@ public class BuildListWindow implements PluginWindow {
 
     private JComponent createMainPanel() {
         BuildDetailsView buildDetailsView = new BuildDetailsView();
-        BuildListView buildListView = new BuildListView(getAppsAndBuilds(), buildDetailsView);
+        AppDetailsView appDetailsView = new AppDetailsView(appService, buildDetailsView);
 
         buildDetailsView.renderView();
-        buildListView.renderView();
+        appDetailsView.renderView();
 
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, buildListView, buildDetailsView);
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, appDetailsView, buildDetailsView);
         splitPane.setResizeWeight(0.5);
         return splitPane;
-    }
-
-    private List<App> getAppsAndBuilds() {
-        return this.appService.getUserApps();
     }
 }
