@@ -1,4 +1,4 @@
-package io.bitrise.plugins.model;
+package io.bitrise.plugins.ui.model;
 
 import com.intellij.ui.JBColor;
 
@@ -104,23 +104,33 @@ public class Build {
 
     public Color getStatusColor() {
         switch (status) {
-            case FAILED: return JBColor.RED;
-            case ABORTED: return JBColor.YELLOW;
-            case SUCCESS: return JBColor.GREEN;
-            case IN_PROGRESS: return JBColor.MAGENTA;
+            case FAILED:
+                return JBColor.RED;
+            case ABORTED:
+                return JBColor.YELLOW;
+            case SUCCESS:
+                return JBColor.GREEN;
+            case IN_PROGRESS:
+                return JBColor.MAGENTA;
 
-            default: return JBColor.CYAN;
+            default:
+                return JBColor.CYAN;
         }
     }
 
     public String getStatusText() {
         switch (status) {
-            case FAILED: return "Failed";
-            case ABORTED: return "Aborted";
-            case SUCCESS: return "Success";
-            case IN_PROGRESS: return "In progress";
+            case FAILED:
+                return "Failed";
+            case ABORTED:
+                return "Aborted";
+            case SUCCESS:
+                return "Success";
+            case IN_PROGRESS:
+                return "In progress";
 
-            default: return "Unknown status";
+            default:
+                return "Unknown status";
         }
     }
 }

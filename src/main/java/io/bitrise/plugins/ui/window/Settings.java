@@ -1,8 +1,8 @@
-package io.bitrise.plugins.window;
+package io.bitrise.plugins.ui.window;
 
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.project.Project;
-import io.bitrise.plugins.component.PluginSettings;
+import io.bitrise.plugins.ui.component.PluginSettings;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
 

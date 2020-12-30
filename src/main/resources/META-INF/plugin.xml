@@ -18,36 +18,24 @@
         <!-- Add your extensions here -->
         <defaultProjectTypeProvider type="Android"/>
         <projectConfigurable
-                instance="io.bitrise.plugins.window.Settings">
+                instance="io.bitrise.plugins.ui.window.Settings">
         </projectConfigurable>
 
         <toolWindow id="Bitrise" secondary="false" icon="AllIcons.General.Modified" anchor="bottom"
-                    factoryClass="io.bitrise.plugins.window.BitriseToolWindowFactory"/>
+                    factoryClass="io.bitrise.plugins.ui.BitriseToolWindowFactory"/>
     </extensions>
 
     <project-components>
         <component>
             <implementation-class>
-                io.bitrise.plugins.component.PluginSettings
+                io.bitrise.plugins.ui.component.PluginSettings
             </implementation-class>
         </component>
     </project-components>
 
     <application-components>
         <component>
-            <implementation-class>io.bitrise.plugins.component.VersionCheck</implementation-class>
+            <implementation-class>io.bitrise.plugins.ui.component.VersionCheck</implementation-class>
         </component>
     </application-components>
-
-    <actions>
-        <group id="MyPlugin.TopMenu"
-               text="_MyPlugin"
-               description="MyPlugin Toolbar Menu">
-            <add-to-group group-id="MainMenu" anchor="last"/>
-            <action id="MyAction"
-                    class="io.bitrise.plugins.actions.DemoAction"
-                    text="_MyAction"
-                    description="MyAction"/>
-        </group>
-    </actions>
 </idea-plugin>

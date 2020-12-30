@@ -1,11 +1,12 @@
-package io.bitrise.plugins.window.app.list;
+package io.bitrise.plugins.ui.window.view.builds;
 
 import com.intellij.ui.JBColor;
-import io.bitrise.plugins.model.App;
-import io.bitrise.plugins.model.Build;
-import io.bitrise.plugins.window.PluginView;
+import io.bitrise.plugins.ui.model.App;
+import io.bitrise.plugins.ui.model.Build;
+import io.bitrise.plugins.ui.window.view.PluginView;
 
 import javax.swing.*;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.plaf.IconUIResource;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
@@ -17,15 +18,17 @@ import java.util.List;
 
 public class AppListView extends JPanel implements PluginView {
     private List<App> apps;
+    private TreeSelectionListener listener;
 
-    public AppListView(List<App> apps) {
+    public AppListView(List<App> apps, TreeSelectionListener listener) {
         this.apps = apps;
-
-        setLayout(new BorderLayout());
+        this.listener = listener;
     }
 
     @Override
     public void renderView() {
+        setLayout(new BorderLayout());
+
         IconUIResource emptyIcon = new IconUIResource(new Icon() {
             @Override
             public void paintIcon(Component c, Graphics g, int x, int y) {
@@ -53,6 +56,7 @@ public class AppListView extends JPanel implements PluginView {
         tree.setRootVisible(false);
         tree.setShowsRootHandles(true);
         tree.putClientProperty("Nimbus.Overrides.InheritDefaults", false);
+        tree.addTreeSelectionListener(this.listener);
 
         JScrollPane jScrollPane = new JScrollPane(tree);
 
@@ -242,7 +246,7 @@ public class AppListView extends JPanel implements PluginView {
         @Override
         public void paintIcon(Component c, Graphics g, int x, int y) {
             g.setColor(color);
-            g.fillRoundRect(x + GAP, y + GAP, dim.width - GAP - GAP, dim.height - GAP - GAP, 5,5);
+            g.fillRoundRect(x + GAP, y + GAP, dim.width - GAP - GAP, dim.height - GAP - GAP, 5, 5);
         }
 
         @Override

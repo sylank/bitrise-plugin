@@ -1,4 +1,4 @@
-package io.bitrise.plugins.model;
+package io.bitrise.plugins.ui.model;
 
 import java.util.List;
 

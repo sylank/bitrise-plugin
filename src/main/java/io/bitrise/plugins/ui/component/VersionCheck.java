@@ -1,4 +1,4 @@
-package io.bitrise.plugins.component;
+package io.bitrise.plugins.ui.component;
 
 import com.intellij.ide.plugins.IdeaPluginDescriptor;
 import com.intellij.ide.plugins.PluginManager;
