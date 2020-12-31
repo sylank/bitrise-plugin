@@ -21,15 +21,15 @@ public class BitriseToolWindowFactory implements ToolWindowFactory {
 
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
-        BuildListWindow myToolWindow = new BuildListWindow(appService);
-        WorkflowListWindow myToolWindow2 = new WorkflowListWindow();
+        BuildListWindow buildListWindow = new BuildListWindow(appService);
+        WorkflowListWindow workflowListWindow = new WorkflowListWindow();
 
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
 
-        Content content = contentFactory.createContent(myToolWindow.getContent(), "Build list", false);
-        Content content2 = contentFactory.createContent(myToolWindow2.getContent(), "Local workflow", false);
+        Content buildListContent = contentFactory.createContent(buildListWindow.getContent(), "Build list", false);
+        Content workflowListContent = contentFactory.createContent(workflowListWindow.getContent(), "Local workflow", false);
 
-        toolWindow.getContentManager().addContent(content);
-        toolWindow.getContentManager().addContent(content2);
+        toolWindow.getContentManager().addContent(buildListContent);
+        toolWindow.getContentManager().addContent(workflowListContent);
     }
 }

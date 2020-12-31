@@ -62,8 +62,9 @@ public class MockAppService implements AppService {
 
         App app = new App("MyApp", asList(build1, build2, build3, build4));
         App app2 = new App("MyApp#2", asList(build2, build3, build4));
+        App app3 = new App("App3333#2", asList(build2));
 
-        return asList(app, app2);
+        return asList(app, app2, app3);
     }
 
     @Override

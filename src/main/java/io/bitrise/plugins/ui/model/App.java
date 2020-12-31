@@ -26,6 +26,10 @@ public class App {
         return builds;
     }
 
+    public Build getLatestBuild() {
+        return builds.get(0);
+    }
+
     public void setBuilds(List<Build> builds) {
         this.builds = builds;
     }

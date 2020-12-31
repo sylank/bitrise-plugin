@@ -8,7 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class BuildListWindow implements PluginWindow {
-    private JPanel myToolWindowContent;
     private AppService appService;
 
     public BuildListWindow(AppService appService) {
@@ -17,7 +16,7 @@ public class BuildListWindow implements PluginWindow {
 
     @Override
     public JComponent getContent() {
-        myToolWindowContent = new JPanel();
+        JPanel myToolWindowContent = new JPanel();
         myToolWindowContent.setLayout(new BorderLayout());
 
         myToolWindowContent.add(createMainPanel(), BorderLayout.CENTER);
