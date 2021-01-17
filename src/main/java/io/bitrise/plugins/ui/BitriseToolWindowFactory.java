@@ -6,6 +6,7 @@ import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import io.bitrise.plugins.service.AppService;
+import io.bitrise.plugins.service.BuildService;
 import io.bitrise.plugins.service.MockAppService;
 import io.bitrise.plugins.service.MockBuildService;
 import io.bitrise.plugins.ui.window.BuildListWindow;
@@ -14,14 +15,16 @@ import org.jetbrains.annotations.NotNull;
 
 public class BitriseToolWindowFactory implements ToolWindowFactory {
     private AppService appService;
+    private BuildService buildService;
 
     public BitriseToolWindowFactory() {
-        appService = new MockAppService(new MockBuildService());
+        buildService = new MockBuildService();
+        appService = new MockAppService(buildService);
     }
 
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
-        BuildListWindow buildListWindow = new BuildListWindow(appService);
+        BuildListWindow buildListWindow = new BuildListWindow(appService, buildService);
         WorkflowListWindow workflowListWindow = new WorkflowListWindow();
 
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();

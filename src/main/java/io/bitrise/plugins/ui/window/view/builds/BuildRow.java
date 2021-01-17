@@ -116,6 +116,10 @@ public class BuildRow extends Row {
         this.selected = selected;
     }
 
+    public Build getBuild() {
+        return build;
+    }
+
     class BuildNodeIcon implements Icon {
         private final Color color;
         private final Dimension dim;
