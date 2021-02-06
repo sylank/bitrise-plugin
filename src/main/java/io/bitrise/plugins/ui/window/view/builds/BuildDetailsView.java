@@ -50,13 +50,14 @@ public class BuildDetailsView extends JPanel implements TreeSelectionListener, P
         logTextPane = new JTextPane();
         logTextPane.setEditable(false);
         logTextPane.setDoubleBuffered(true);
+
         add(new JScrollPane(logTextPane), BorderLayout.CENTER);
     }
 
     private void updateView(Build build) throws IOException {
         String buildLog = buildLogService.getBuildLogsByAppSlugAndBuildId(build.getAppSlug(), build.getBuildSlug());
 
-        logTextPane.setContentType("text/rtf");
+        logTextPane.setContentType("text/html");
         logTextPane.setEditorKit(new HTMLEditorKit());
         logTextPane.setText(formatBuildLogs(buildLog));
     }
@@ -72,8 +73,6 @@ public class BuildDetailsView extends JPanel implements TreeSelectionListener, P
         String white = String.format("<span style=\"color: rgb(%d,%d,%d);\">", JBColor.white.getRed(), JBColor.white.getGreen(), JBColor.white.getBlue());
 
         buildLog = buildLog
-                .replaceAll("\n", "<br>")
-                .replaceAll("\t", "&#9;")
                 .replaceAll("\\[30;1m", black)
                 .replaceAll("\\[31;1m", red)
                 .replaceAll("\\[32;1m", green)
@@ -85,8 +84,8 @@ public class BuildDetailsView extends JPanel implements TreeSelectionListener, P
                 .replaceAll("\\[0m", "</span>");
 
         StringBuilder buffer = new StringBuilder(buildLog);
-        buffer.insert(0, "<html>");
-        buffer.insert(buffer.length(), "</html>");
+        buffer.insert(0, "<html><pre>");
+        buffer.insert(buffer.length(), "</pre></html>");
 
         return buffer.toString();
     }
