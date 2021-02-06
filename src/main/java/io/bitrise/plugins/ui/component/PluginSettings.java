@@ -1,6 +1,7 @@
 package io.bitrise.plugins.ui.component;
 
 import com.intellij.openapi.components.PersistentStateComponent;
+import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.openapi.project.Project;
@@ -25,8 +26,8 @@ public class PluginSettings implements PersistentStateComponent<PluginSettings> 
         XmlSerializerUtil.copyBean(state, this);
     }
 
-    public static PluginSettings getInstance(Project project) {
-        return project.getComponent(PluginSettings.class);
+    public static PluginSettings getInstance() {
+        return ServiceManager.getService(PluginSettings.class);
     }
 
     public String getAccessToken() {

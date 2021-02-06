@@ -3,6 +3,7 @@ package io.bitrise.plugins.ui.window.view.builds;
 
 import io.bitrise.plugins.service.AppService;
 import io.bitrise.plugins.service.BuildService;
+import io.bitrise.plugins.service.DefaultAppService;
 import io.bitrise.plugins.ui.model.App;
 import io.bitrise.plugins.ui.model.Build;
 import io.bitrise.plugins.ui.window.view.PluginView;
@@ -10,6 +11,9 @@ import io.bitrise.plugins.ui.window.view.PluginView;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.List;
 
 public class AppDetailsView extends JPanel implements PluginView {
@@ -24,7 +28,7 @@ public class AppDetailsView extends JPanel implements PluginView {
     }
 
     @Override
-    public void renderView() {
+    public void renderView() throws IOException {
         setLayout(new BorderLayout());
 
         JPanel actionPanel = createActionPanel();
@@ -57,8 +61,9 @@ public class AppDetailsView extends JPanel implements PluginView {
         return actionPanel;
     }
 
-    private List<App> retrieveUserAppsAndBuilds() {
+    private List<App> retrieveUserAppsAndBuilds() throws IOException {
         List<App> apps = this.appService.getUserApps();
+
         apps.forEach(app -> {
             List<Build> buildsByAppSlug = buildService.getBuildsByAppSlug(app.getSlug());
             app.setBuilds(buildsByAppSlug);

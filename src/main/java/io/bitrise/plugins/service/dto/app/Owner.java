@@ -1,5 +1,7 @@
 package io.bitrise.plugins.service.dto.app;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Owner {
     private String account_type;
     private String name;
@@ -14,6 +16,7 @@ public class Owner {
         this.slug = slug;
     }
 
+    @JsonProperty("account_type")
     public String getAccountType() {
         return account_type;
     }

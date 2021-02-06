@@ -1,5 +1,7 @@
 package io.bitrise.plugins.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Paging {
     private int totalItemCount;
     private int pageItemLimit;
@@ -14,6 +16,7 @@ public class Paging {
         this.next = next;
     }
 
+    @JsonProperty("total_item_count")
     public int getTotalItemCount() {
         return totalItemCount;
     }
@@ -22,6 +25,7 @@ public class Paging {
         this.totalItemCount = totalItemCount;
     }
 
+    @JsonProperty("page_item_limit")
     public int getPageItemLimit() {
         return pageItemLimit;
     }

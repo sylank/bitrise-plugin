@@ -10,6 +10,7 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
 import java.awt.*;
+import java.io.IOException;
 import java.util.List;
 
 public class BuildListView extends JPanel implements PluginView {
@@ -69,7 +70,11 @@ public class BuildListView extends JPanel implements PluginView {
                     Row rowView = (Row) node.getUserObject();
                     rowView.setSelected(selected);
 
-                    rowView.renderView();
+                    try {
+                        rowView.renderView();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
                     return rowView;
                 }

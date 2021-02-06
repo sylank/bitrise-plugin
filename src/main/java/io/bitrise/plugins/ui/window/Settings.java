@@ -16,21 +16,12 @@ public class Settings implements DocumentListener, Configurable, ChangeListener 
     private Project project;
     private JPasswordField tokenField = new JPasswordField();
     private JSpinner refreshSpinner = new JSpinner(new SpinnerNumberModel(10, 10, 100, 1));
+    JPanel mainPanel;
 
     private boolean modified = false;
 
-    public Settings(Project project) {
-        this.project = project;
-    }
-
-    @Override
-    public @Nls(capitalization = Nls.Capitalization.Title) String getDisplayName() {
-        return "Bitrise PlugIn - Settings";
-    }
-
-    @Override
-    public @Nullable JComponent createComponent() {
-        JPanel mainPanel = new JPanel();
+    public Settings() {
+        mainPanel = new JPanel();
         mainPanel.setBounds(0, 0, 450, 120);
         mainPanel.setLayout(null);
 
@@ -43,8 +34,8 @@ public class Settings implements DocumentListener, Configurable, ChangeListener 
         mainPanel.add(lblPassword);
 
         JLabel lblTargetSlug = new JLabel("Targeting by app slug:");
-        lblPassword.setBounds(30, 99, 200, 16);
-        mainPanel.add(lblPassword);
+        lblTargetSlug.setBounds(30, 99, 200, 16);
+        mainPanel.add(lblTargetSlug);
 
         tokenField.setBounds(210, 20, 291, 26);
         mainPanel.add(tokenField);
@@ -52,13 +43,25 @@ public class Settings implements DocumentListener, Configurable, ChangeListener 
         refreshSpinner.setBounds(210, 69, 80, 26);
         mainPanel.add(refreshSpinner);
 
-        PluginSettings config = PluginSettings.getInstance(project);
+        PluginSettings config = PluginSettings.getInstance();
         tokenField.setText(config.getAccessToken());
         refreshSpinner.setValue(config.getRefreshIntervalInSec());
 
         tokenField.getDocument().addDocumentListener(this);
         refreshSpinner.getModel().addChangeListener(this);
+    }
 
+    @Override
+    public @Nls(capitalization = Nls.Capitalization.Title) String getDisplayName() {
+        return "Bitrise PlugIn - Settings";
+    }
+
+    @Override
+    public @Nullable JComponent createComponent() {
+        return mainPanel;
+    }
+
+    public JComponent getPreferredFocusedComponent() {
         return mainPanel;
     }
 
@@ -69,7 +72,7 @@ public class Settings implements DocumentListener, Configurable, ChangeListener 
 
     @Override
     public void apply() {
-        PluginSettings config = PluginSettings.getInstance(project);
+        PluginSettings config = PluginSettings.getInstance();
         config.setAccessToken(tokenField.getText());
         config.setRefreshIntervalInSec((int) refreshSpinner.getValue());
 

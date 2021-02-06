@@ -8,6 +8,7 @@ import io.bitrise.plugins.ui.window.view.builds.BuildDetailsView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class BuildListWindow implements PluginWindow {
     private AppService appService;
@@ -21,7 +22,7 @@ public class BuildListWindow implements PluginWindow {
     }
 
     @Override
-    public JComponent getContent() {
+    public JComponent getContent() throws IOException {
         JPanel myToolWindowContent = new JPanel();
         myToolWindowContent.setLayout(new BorderLayout());
 
@@ -30,7 +31,7 @@ public class BuildListWindow implements PluginWindow {
         return myToolWindowContent;
     }
 
-    private JComponent createMainPanel() {
+    private JComponent createMainPanel() throws IOException {
         BuildDetailsView buildDetailsView = new BuildDetailsView(buildLogService);
         AppDetailsView appDetailsView = new AppDetailsView(appService, buildService, buildDetailsView);
 

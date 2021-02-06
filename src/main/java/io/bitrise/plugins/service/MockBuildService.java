@@ -3,6 +3,7 @@ package io.bitrise.plugins.service;
 import io.bitrise.plugins.ui.model.Build;
 import io.bitrise.plugins.ui.model.BuildStatus;
 
+import java.util.Collections;
 import java.util.List;
 
 import static java.util.Arrays.asList;
@@ -118,6 +119,6 @@ public class MockBuildService implements BuildService {
             return asList(build2);
         }
 
-        return null;
+        return Collections.emptyList();
     }
 }

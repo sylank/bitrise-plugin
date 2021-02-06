@@ -1,5 +1,7 @@
 package io.bitrise.plugins.service.dto.app;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class AppDetails {
     private String slug;
     private String title;
@@ -48,6 +50,7 @@ public class AppDetails {
         this.title = title;
     }
 
+    @JsonProperty("project_type")
     public String getProjectType() {
         return project_type;
     }
@@ -64,6 +67,7 @@ public class AppDetails {
         this.provider = provider;
     }
 
+    @JsonProperty("repo_owner")
     public String getRepoOwner() {
         return repo_owner;
     }
@@ -72,6 +76,7 @@ public class AppDetails {
         this.repo_owner = repo_owner;
     }
 
+    @JsonProperty("repo_url")
     public String getRepoUrl() {
         return repo_url;
     }
@@ -80,6 +85,7 @@ public class AppDetails {
         this.repo_url = repo_url;
     }
 
+    @JsonProperty("repo_slug")
     public String getRepoSlug() {
         return repo_slug;
     }
@@ -88,6 +94,7 @@ public class AppDetails {
         this.repo_slug = repo_slug;
     }
 
+    @JsonProperty("is_disabled")
     public boolean isIsDisabled() {
         return is_disabled;
     }
@@ -104,6 +111,7 @@ public class AppDetails {
         this.status = status;
     }
 
+    @JsonProperty("is_public")
     public boolean isIsPublic() {
         return is_public;
     }
@@ -120,6 +128,7 @@ public class AppDetails {
         this.owner = owner;
     }
 
+    @JsonProperty("avatar_url")
     public Object getAvatarUrl() {
         return avatar_url;
     }

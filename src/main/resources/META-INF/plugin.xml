@@ -17,12 +17,18 @@
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
         <defaultProjectTypeProvider type="Android"/>
-        <projectConfigurable
-                instance="io.bitrise.plugins.ui.window.Settings">
-        </projectConfigurable>
+<!--        <projectConfigurable-->
+<!--                instance="io.bitrise.plugins.ui.window.Settings">-->
+<!--        </projectConfigurable>-->
+
+        <applicationConfigurable parentId="tools" instance="io.bitrise.plugins.ui.window.Settings"
+                                 id="org.intellij.sdk.settings.AppSettingsConfigurable"
+                                 displayName="Bitrise Plugin Settings"/>
 
         <toolWindow id="Bitrise" secondary="false" icon="AllIcons.General.Modified" anchor="bottom"
                     factoryClass="io.bitrise.plugins.ui.BitriseToolWindowFactory"/>
+
+        <applicationService serviceImplementation="io.bitrise.plugins.ui.component.PluginSettings"/>
     </extensions>
 
     <project-components>
