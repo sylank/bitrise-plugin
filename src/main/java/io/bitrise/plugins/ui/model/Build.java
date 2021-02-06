@@ -1,7 +1,7 @@
 package io.bitrise.plugins.ui.model;
 
 import com.intellij.ui.JBColor;
-import io.bitrise.plugins.service.dto.build.BuildDetails;
+import io.bitrise.plugins.service.dto.builds.BuildDetails;
 
 import java.awt.*;
 import java.util.concurrent.TimeUnit;

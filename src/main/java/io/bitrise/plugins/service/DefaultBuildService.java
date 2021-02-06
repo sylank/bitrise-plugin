@@ -1,6 +1,6 @@
 package io.bitrise.plugins.service;
 
-import io.bitrise.plugins.service.dto.build.BuildDto;
+import io.bitrise.plugins.service.dto.builds.BuildDto;
 import io.bitrise.plugins.ui.model.Build;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.core.MediaType;
