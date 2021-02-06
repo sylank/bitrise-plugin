@@ -50,18 +50,17 @@ public class BuildRow extends Row {
         fromLabel.setBackground(JBColor.CYAN);
         fromLabel.setOpaque(true);
 
-        JLabel arrow = new JLabel("->");
-        if (build.isPr()) {
-            arrow.setText("@");
-        }
-
         JLabel toLabel = new JLabel(build.getToBranch());
         toLabel.setBackground(JBColor.ORANGE);
         toLabel.setOpaque(true);
 
         branchPanel.add(fromLabel);
-        branchPanel.add(arrow);
-        branchPanel.add(toLabel);
+
+        JLabel arrow = new JLabel("->");
+        if (build.isPr()) {
+            branchPanel.add(arrow);
+            branchPanel.add(toLabel);
+        }
 
         JLabel commitMessage = new JLabel(build.getCommitMessage());
         Dimension dCommit = commitMessage.getPreferredSize();
@@ -80,7 +79,7 @@ public class BuildRow extends Row {
         dRuntime.width = 100;
         runtimeLabel.setPreferredSize(dRuntime);
 
-        JLabel slugLabel = new JLabel("#" + build.getBuildSlug());
+        JLabel slugLabel = new JLabel("Slug: " + build.getBuildSlug());
         Dimension dSlug = slugLabel.getPreferredSize();
         dSlug.width = 200;
         slugLabel.setPreferredSize(dSlug);

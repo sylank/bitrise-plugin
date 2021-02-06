@@ -13,6 +13,7 @@ public class PluginSettings implements PersistentStateComponent<PluginSettings> 
 
     private String accessToken = "";
     private int refreshIntervalInSec = 10;
+    private String focusedAppSlug = "";
 
     @Nullable
     @Override
@@ -43,5 +44,13 @@ public class PluginSettings implements PersistentStateComponent<PluginSettings> 
 
     public void setRefreshIntervalInSec(int refreshIntervalInSec) {
         this.refreshIntervalInSec = refreshIntervalInSec;
+    }
+
+    public String getFocusedAppSlug() {
+        return focusedAppSlug;
+    }
+
+    public void setFocusedAppSlug(String focusedAppSlug) {
+        this.focusedAppSlug = focusedAppSlug;
     }
 }

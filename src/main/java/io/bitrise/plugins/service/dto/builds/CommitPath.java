@@ -1,7 +1,10 @@
 package io.bitrise.plugins.service.dto.builds;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CommitPath {
     private List<Object> added;
     private List<Object> removed;

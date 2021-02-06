@@ -1,42 +1,30 @@
 package io.bitrise.plugins.service.dto.app;
 
-import io.bitrise.plugins.service.dto.Paging;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.List;
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AppDto {
-    private List<AppDetails> data;
-    private Paging paging;
+    private AppDetails data;
 
     public AppDto() {
     }
 
-    public AppDto(List<AppDetails> data, Paging paging) {
+    public AppDto(AppDetails data) {
         this.data = data;
-        this.paging = paging;
     }
 
-    public List<AppDetails> getData() {
+    public AppDetails getData() {
         return data;
     }
 
-    public void setData(List<AppDetails> data) {
+    public void setData(AppDetails data) {
         this.data = data;
-    }
-
-    public Paging getPaging() {
-        return paging;
-    }
-
-    public void setPaging(Paging paging) {
-        this.paging = paging;
     }
 
     @Override
     public String toString() {
         return "AppDto{" +
                 "data=" + data +
-                ", paging=" + paging +
                 '}';
     }
 }

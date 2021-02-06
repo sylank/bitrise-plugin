@@ -1,4 +1,4 @@
-package io.bitrise.plugins.service.dto.builds;
+package io.bitrise.plugins.service.dto.app;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.bitrise.plugins.service.dto.Paging;
@@ -6,23 +6,23 @@ import io.bitrise.plugins.service.dto.Paging;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class BuildDto {
-    private List<BuildDetails> data;
+public class AppsDto {
+    private List<AppDetails> data;
     private Paging paging;
 
-    public BuildDto() {
+    public AppsDto() {
     }
 
-    public BuildDto(List<BuildDetails> data, Paging paging) {
+    public AppsDto(List<AppDetails> data, Paging paging) {
         this.data = data;
         this.paging = paging;
     }
 
-    public List<BuildDetails> getData() {
+    public List<AppDetails> getData() {
         return data;
     }
 
-    public void setData(List<BuildDetails> data) {
+    public void setData(List<AppDetails> data) {
         this.data = data;
     }
 
@@ -36,7 +36,7 @@ public class BuildDto {
 
     @Override
     public String toString() {
-        return "BuildDto{" +
+        return "AppsDto{" +
                 "data=" + data +
                 ", paging=" + paging +
                 '}';

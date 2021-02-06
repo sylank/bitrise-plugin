@@ -1,7 +1,6 @@
 package io.bitrise.plugins.ui.window;
 
 import com.intellij.openapi.options.Configurable;
-import com.intellij.openapi.project.Project;
 import io.bitrise.plugins.ui.component.PluginSettings;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
@@ -13,8 +12,9 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 public class Settings implements DocumentListener, Configurable, ChangeListener {
-    private Project project;
+
     private JPasswordField tokenField = new JPasswordField();
+    private JTextField appSlugField = new JTextField();
     private JSpinner refreshSpinner = new JSpinner(new SpinnerNumberModel(10, 10, 100, 1));
     JPanel mainPanel;
 
@@ -33,7 +33,7 @@ public class Settings implements DocumentListener, Configurable, ChangeListener 
         lblPassword.setBounds(30, 74, 200, 16);
         mainPanel.add(lblPassword);
 
-        JLabel lblTargetSlug = new JLabel("Targeting by app slug:");
+        JLabel lblTargetSlug = new JLabel("Focus by app slug:");
         lblTargetSlug.setBounds(30, 99, 200, 16);
         mainPanel.add(lblTargetSlug);
 
@@ -43,12 +43,17 @@ public class Settings implements DocumentListener, Configurable, ChangeListener 
         refreshSpinner.setBounds(210, 69, 80, 26);
         mainPanel.add(refreshSpinner);
 
+        appSlugField.setBounds(210, 99, 291, 26);
+        mainPanel.add(appSlugField);
+
         PluginSettings config = PluginSettings.getInstance();
         tokenField.setText(config.getAccessToken());
         refreshSpinner.setValue(config.getRefreshIntervalInSec());
+        appSlugField.setText(config.getFocusedAppSlug());
 
         tokenField.getDocument().addDocumentListener(this);
         refreshSpinner.getModel().addChangeListener(this);
+        appSlugField.getDocument().addDocumentListener(this);
     }
 
     @Override
@@ -74,6 +79,7 @@ public class Settings implements DocumentListener, Configurable, ChangeListener 
     public void apply() {
         PluginSettings config = PluginSettings.getInstance();
         config.setAccessToken(tokenField.getText());
+        config.setFocusedAppSlug(appSlugField.getText());
         config.setRefreshIntervalInSec((int) refreshSpinner.getValue());
 
         modified = false;

@@ -17,9 +17,4 @@ public class MockAppService implements AppService {
 
         return asList(app, app2, app3);
     }
-
-    @Override
-    public App getAppById(String appId) {
-        return null;
-    }
 }

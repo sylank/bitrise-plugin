@@ -1,10 +1,12 @@
 package io.bitrise.plugins.service.dto.builds;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class BuildDetails {
     private Date triggered_at;
     private Date started_on_worker_at;

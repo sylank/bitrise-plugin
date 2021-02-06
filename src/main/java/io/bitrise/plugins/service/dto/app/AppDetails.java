@@ -1,7 +1,9 @@
 package io.bitrise.plugins.service.dto.app;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AppDetails {
     private String slug;
     private String title;
