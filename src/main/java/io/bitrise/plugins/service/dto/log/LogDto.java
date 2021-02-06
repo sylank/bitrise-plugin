@@ -3,8 +3,6 @@ package io.bitrise.plugins.service.dto.log;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LogDto {
     private String expiring_raw_log_url;

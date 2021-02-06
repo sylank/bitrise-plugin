@@ -51,7 +51,7 @@ public class Build {
                 break;
         }
 
-        if (buildDetails.getPullRequestViewUrl() != null){
+        if (buildDetails.getPullRequestViewUrl() != null) {
             this.pr = !buildDetails.getPullRequestViewUrl().equals("");
             this.toBranch = buildDetails.getPullRequestTargetBranch();
         }

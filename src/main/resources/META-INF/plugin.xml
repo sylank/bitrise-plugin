@@ -17,9 +17,9 @@
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
         <defaultProjectTypeProvider type="Android"/>
-<!--        <projectConfigurable-->
-<!--                instance="io.bitrise.plugins.ui.window.Settings">-->
-<!--        </projectConfigurable>-->
+        <!--        <projectConfigurable-->
+        <!--                instance="io.bitrise.plugins.ui.window.Settings">-->
+        <!--        </projectConfigurable>-->
 
         <applicationConfigurable parentId="tools" instance="io.bitrise.plugins.ui.window.Settings"
                                  id="org.intellij.sdk.settings.AppSettingsConfigurable"

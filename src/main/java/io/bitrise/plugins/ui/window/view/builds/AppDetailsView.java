@@ -3,7 +3,6 @@ package io.bitrise.plugins.ui.window.view.builds;
 
 import io.bitrise.plugins.service.AppService;
 import io.bitrise.plugins.service.BuildService;
-import io.bitrise.plugins.service.DefaultAppService;
 import io.bitrise.plugins.service.DefaultBuildService;
 import io.bitrise.plugins.ui.component.PluginSettings;
 import io.bitrise.plugins.ui.model.App;
@@ -13,13 +12,10 @@ import io.bitrise.plugins.ui.window.view.PluginView;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class AppDetailsView extends JPanel implements PluginView {
     private AppService appService;

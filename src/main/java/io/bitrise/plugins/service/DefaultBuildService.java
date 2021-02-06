@@ -1,13 +1,10 @@
 package io.bitrise.plugins.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.bitrise.plugins.service.dto.app.AppDto;
 import io.bitrise.plugins.service.dto.builds.BuildDto;
 import io.bitrise.plugins.ui.component.PluginSettings;
-import io.bitrise.plugins.ui.model.App;
 import io.bitrise.plugins.ui.model.Build;
 import org.apache.http.client.fluent.Request;
-
 
 import java.io.IOException;
 import java.util.List;
