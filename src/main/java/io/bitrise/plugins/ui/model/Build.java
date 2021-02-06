@@ -51,8 +51,10 @@ public class Build {
                 break;
         }
 
-        this.pr = !buildDetails.getPullRequestViewUrl().equals("");
-        this.toBranch = buildDetails.getPullRequestTargetBranch();
+        if (buildDetails.getPullRequestViewUrl() != null){
+            this.pr = !buildDetails.getPullRequestViewUrl().equals("");
+            this.toBranch = buildDetails.getPullRequestTargetBranch();
+        }
         this.fromBranch = buildDetails.getBranch();
         this.triggeredAt = buildDetails.getTriggeredAt().toString();
 

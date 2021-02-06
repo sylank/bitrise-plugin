@@ -10,6 +10,8 @@ import io.bitrise.plugins.service.AppService;
 import io.bitrise.plugins.service.BuildLogService;
 import io.bitrise.plugins.service.BuildService;
 import io.bitrise.plugins.service.DefaultAppService;
+import io.bitrise.plugins.service.DefaultBuildLogService;
+import io.bitrise.plugins.service.DefaultBuildService;
 import io.bitrise.plugins.service.MockAppService;
 import io.bitrise.plugins.service.MockBuildLogService;
 import io.bitrise.plugins.service.MockBuildService;
@@ -27,10 +29,11 @@ public class BitriseToolWindowFactory implements ToolWindowFactory {
 
     public BitriseToolWindowFactory() {
         PluginSettings settings = PluginSettings.getInstance();
+
         appService = new DefaultAppService(settings);
-//        appService = new MockAppService();
-        buildService = new MockBuildService();
-        buildLogService = new MockBuildLogService();
+        buildService = new DefaultBuildService(settings);
+//        buildService = new MockBuildService();
+        buildLogService = new DefaultBuildLogService(settings);
     }
 
     @Override

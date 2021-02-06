@@ -10,6 +10,7 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
+import java.io.IOException;
 
 public class BuildDetailsView extends JPanel implements TreeSelectionListener, PluginView {
     private BuildLogService buildLogService;
@@ -33,7 +34,11 @@ public class BuildDetailsView extends JPanel implements TreeSelectionListener, P
         if (nodeInfo instanceof BuildRow) {
             Build build = ((BuildRow) nodeInfo).getBuild();
 
-            updateView(build);
+            try {
+                updateView(build);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -47,7 +52,7 @@ public class BuildDetailsView extends JPanel implements TreeSelectionListener, P
         add(new JScrollPane(logTextPane), BorderLayout.CENTER);
     }
 
-    private void updateView(Build build) {
+    private void updateView(Build build) throws IOException {
         String buildLog = buildLogService.getBuildLogsByAppSlugAndBuildId(build.getAppSlug(), build.getBuildSlug());
 
         logTextPane.setText(buildLog);

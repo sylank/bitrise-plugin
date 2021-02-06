@@ -45,7 +45,10 @@ public class BuildListView extends JPanel implements PluginView {
             DefaultMutableTreeNode appNode = new DefaultMutableTreeNode(new AppRow(app));
 
             app.getBuilds().forEach(
-                    build -> appNode.add(new DefaultMutableTreeNode(new BuildRow(build)))
+                    build -> {
+                        build.setAppSlug(app.getSlug());
+                        appNode.add(new DefaultMutableTreeNode(new BuildRow(build)));
+                    }
             );
 
             root.add(appNode);

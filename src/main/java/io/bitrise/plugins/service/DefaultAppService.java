@@ -30,7 +30,7 @@ public class DefaultAppService implements AppService {
         ObjectMapper objectMapper = new ObjectMapper();
         AppDto appDto = objectMapper.readValue(response, AppDto.class);
 
-        return appDto.getData().parallelStream().map(App::new).collect(Collectors.toList());
+        return appDto.getData().parallelStream().map(App::new).limit(1).collect(Collectors.toList());
     }
 
     @Override

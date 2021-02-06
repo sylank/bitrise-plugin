@@ -1,5 +1,8 @@
 package io.bitrise.plugins.service.dto.builds;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 
 public class BuildDetails {
@@ -59,6 +62,7 @@ public class BuildDetails {
         this.appSlug = appSlug;
     }
 
+    @JsonProperty("triggered_at")
     public Date getTriggeredAt() {
         return triggered_at;
     }
@@ -67,6 +71,7 @@ public class BuildDetails {
         this.triggered_at = triggered_at;
     }
 
+    @JsonProperty("started_on_worker_at")
     public Date getStartedOnWorkerAt() {
         return started_on_worker_at;
     }
@@ -75,6 +80,7 @@ public class BuildDetails {
         this.started_on_worker_at = started_on_worker_at;
     }
 
+    @JsonProperty("environment_prepare_finished_at")
     public Date getEnvironmentPrepareFinishedAt() {
         return environment_prepare_finished_at;
     }
@@ -83,6 +89,7 @@ public class BuildDetails {
         this.environment_prepare_finished_at = environment_prepare_finished_at;
     }
 
+    @JsonProperty("finished_at")
     public Date getFinishedAt() {
         return finished_at;
     }
@@ -107,6 +114,7 @@ public class BuildDetails {
         this.status = status;
     }
 
+    @JsonProperty("status_text")
     public String getStatusText() {
         return status_text;
     }
@@ -115,6 +123,7 @@ public class BuildDetails {
         this.status_text = status_text;
     }
 
+    @JsonProperty("abort_reason")
     public Object getAbortReason() {
         return abort_reason;
     }
@@ -123,6 +132,7 @@ public class BuildDetails {
         this.abort_reason = abort_reason;
     }
 
+    @JsonProperty("is_on_hold")
     public boolean isIsOnHold() {
         return is_on_hold;
     }
@@ -139,6 +149,7 @@ public class BuildDetails {
         this.branch = branch;
     }
 
+    @JsonProperty("build_number")
     public int getBuildNumber() {
         return build_number;
     }
@@ -147,6 +158,7 @@ public class BuildDetails {
         this.build_number = build_number;
     }
 
+    @JsonProperty("commit_hash")
     public String getCommitHash() {
         return commit_hash;
     }
@@ -155,6 +167,7 @@ public class BuildDetails {
         this.commit_hash = commit_hash;
     }
 
+    @JsonProperty("commit_message")
     public String getCommitMessage() {
         return commit_message;
     }
@@ -171,6 +184,7 @@ public class BuildDetails {
         this.tag = tag;
     }
 
+    @JsonProperty("triggered_workflow")
     public String getTriggeredWorkflow() {
         return triggered_workflow;
     }
@@ -179,6 +193,7 @@ public class BuildDetails {
         this.triggered_workflow = triggered_workflow;
     }
 
+    @JsonProperty("triggered_by")
     public String getTriggeredBy() {
         return triggered_by;
     }
@@ -187,6 +202,7 @@ public class BuildDetails {
         this.triggered_by = triggered_by;
     }
 
+    @JsonProperty("machine_type_id")
     public String getMachineTypeId() {
         return machine_type_id;
     }
@@ -195,6 +211,7 @@ public class BuildDetails {
         this.machine_type_id = machine_type_id;
     }
 
+    @JsonProperty("stack_identifier")
     public String getStackIdentifier() {
         return stack_identifier;
     }
@@ -203,6 +220,7 @@ public class BuildDetails {
         this.stack_identifier = stack_identifier;
     }
 
+    @JsonProperty("original_build_params")
     public OriginalBuildParams getOriginalBuildParams() {
         return original_build_params;
     }
@@ -211,6 +229,7 @@ public class BuildDetails {
         this.original_build_params = original_build_params;
     }
 
+    @JsonProperty("pull_request_id")
     public int getPullRequestId() {
         return pull_request_id;
     }
@@ -219,6 +238,7 @@ public class BuildDetails {
         this.pull_request_id = pull_request_id;
     }
 
+    @JsonProperty("pull_request_target_branch")
     public String getPullRequestTargetBranch() {
         return pull_request_target_branch;
     }
@@ -227,6 +247,7 @@ public class BuildDetails {
         this.pull_request_target_branch = pull_request_target_branch;
     }
 
+    @JsonProperty("pull_request_view_url")
     public String getPullRequestViewUrl() {
         return pull_request_view_url;
     }
@@ -235,6 +256,7 @@ public class BuildDetails {
         this.pull_request_view_url = pull_request_view_url;
     }
 
+    @JsonProperty("commit_view_url")
     public String getCommitViewUrl() {
         return commit_view_url;
     }
@@ -243,6 +265,7 @@ public class BuildDetails {
         this.commit_view_url = commit_view_url;
     }
 
+    @JsonIgnore
     public String getAppSlug() {
         return appSlug;
     }

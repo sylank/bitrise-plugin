@@ -1,7 +1,11 @@
 package io.bitrise.plugins.service.dto.builds;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class OriginalBuildParams {
     private String commit_hash;
     private String commit_message;
@@ -20,6 +24,7 @@ public class OriginalBuildParams {
         this.commit_paths = commit_paths;
     }
 
+    @JsonProperty("commit_hash")
     public String getCommitHash() {
         return commit_hash;
     }
@@ -28,6 +33,7 @@ public class OriginalBuildParams {
         this.commit_hash = commit_hash;
     }
 
+    @JsonProperty("commit_message")
     public String getCommitMessage() {
         return commit_message;
     }
@@ -44,6 +50,7 @@ public class OriginalBuildParams {
         this.branch = branch;
     }
 
+    @JsonProperty("diff_url")
     public String getDiffUrl() {
         return diff_url;
     }
@@ -52,6 +59,7 @@ public class OriginalBuildParams {
         this.diff_url = diff_url;
     }
 
+    @JsonProperty("commit_paths")
     public List<CommitPath> getCommitPaths() {
         return commit_paths;
     }

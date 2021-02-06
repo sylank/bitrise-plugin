@@ -4,6 +4,8 @@ package io.bitrise.plugins.ui.window.view.builds;
 import io.bitrise.plugins.service.AppService;
 import io.bitrise.plugins.service.BuildService;
 import io.bitrise.plugins.service.DefaultAppService;
+import io.bitrise.plugins.service.DefaultBuildService;
+import io.bitrise.plugins.ui.component.PluginSettings;
 import io.bitrise.plugins.ui.model.App;
 import io.bitrise.plugins.ui.model.Build;
 import io.bitrise.plugins.ui.window.view.PluginView;
@@ -13,8 +15,11 @@ import javax.swing.event.TreeSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AppDetailsView extends JPanel implements PluginView {
     private AppService appService;
@@ -52,6 +57,21 @@ public class AppDetailsView extends JPanel implements PluginView {
         searchField.setPreferredSize(new Dimension(200, 25));
 
         JButton allButton = new JButton("All");
+        allButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                PluginSettings instance = PluginSettings.getInstance();
+                DefaultBuildService defaultBuildService = new DefaultBuildService(instance);
+                try {
+                    List<Build> asd = defaultBuildService.getBuildsByAppSlug("d28fdbc7a7604f73");
+
+                    System.out.println(asd);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
+            }
+        });
         JButton favouritesButton = new JButton("Favourites");
 
         actionPanel.add(searchField);
@@ -65,7 +85,12 @@ public class AppDetailsView extends JPanel implements PluginView {
         List<App> apps = this.appService.getUserApps();
 
         apps.forEach(app -> {
-            List<Build> buildsByAppSlug = buildService.getBuildsByAppSlug(app.getSlug());
+            List<Build> buildsByAppSlug = null;
+            try {
+                buildsByAppSlug = buildService.getBuildsByAppSlug(app.getSlug());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             app.setBuilds(buildsByAppSlug);
         });
 
