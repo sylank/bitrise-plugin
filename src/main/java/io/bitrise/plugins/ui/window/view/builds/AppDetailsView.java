@@ -2,7 +2,9 @@ package io.bitrise.plugins.ui.window.view.builds;
 
 
 import io.bitrise.plugins.service.AppService;
+import io.bitrise.plugins.service.BuildService;
 import io.bitrise.plugins.ui.model.App;
+import io.bitrise.plugins.ui.model.Build;
 import io.bitrise.plugins.ui.window.view.PluginView;
 
 import javax.swing.*;
@@ -12,10 +14,12 @@ import java.util.List;
 
 public class AppDetailsView extends JPanel implements PluginView {
     private AppService appService;
+    private BuildService buildService;
     private TreeSelectionListener treeSelectionListener;
 
-    public AppDetailsView(AppService appService, TreeSelectionListener treeSelectionListener) {
+    public AppDetailsView(AppService appService, BuildService buildService, TreeSelectionListener treeSelectionListener) {
         this.appService = appService;
+        this.buildService = buildService;
         this.treeSelectionListener = treeSelectionListener;
     }
 
@@ -25,7 +29,7 @@ public class AppDetailsView extends JPanel implements PluginView {
 
         JPanel actionPanel = createActionPanel();
 
-        BuildListView appListPanel = new BuildListView(getAppsAndBuilds(), treeSelectionListener);
+        BuildListView appListPanel = new BuildListView(retrieveUserAppsAndBuilds(), treeSelectionListener);
         appListPanel.renderView();
 
         add(actionPanel, BorderLayout.NORTH);
@@ -53,7 +57,13 @@ public class AppDetailsView extends JPanel implements PluginView {
         return actionPanel;
     }
 
-    private List<App> getAppsAndBuilds() {
-        return this.appService.getUserApps();
+    private List<App> retrieveUserAppsAndBuilds() {
+        List<App> apps = this.appService.getUserApps();
+        apps.forEach(app -> {
+            List<Build> buildsByAppSlug = buildService.getBuildsByAppSlug(app.getSlug());
+            app.setBuilds(buildsByAppSlug);
+        });
+
+        return apps;
     }
 }

@@ -42,6 +42,10 @@ public class Settings implements DocumentListener, Configurable, ChangeListener 
         lblPassword.setBounds(30, 74, 200, 16);
         mainPanel.add(lblPassword);
 
+        JLabel lblTargetSlug = new JLabel("Targeting by app slug:");
+        lblPassword.setBounds(30, 99, 200, 16);
+        mainPanel.add(lblPassword);
+
         tokenField.setBounds(210, 20, 291, 26);
         mainPanel.add(tokenField);
 

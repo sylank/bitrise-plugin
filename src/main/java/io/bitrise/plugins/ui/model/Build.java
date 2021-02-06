@@ -1,8 +1,10 @@
 package io.bitrise.plugins.ui.model;
 
 import com.intellij.ui.JBColor;
+import io.bitrise.plugins.service.dto.build.BuildDetails;
 
 import java.awt.*;
+import java.util.concurrent.TimeUnit;
 
 public class Build {
     private BuildStatus status;
@@ -14,8 +16,9 @@ public class Build {
     private String commitMessage;
     private String buildNumber;
     private String buildSlug;
+    private String appSlug;
 
-    public Build(BuildStatus status, boolean pr, String fromBranch, String toBranch, String triggeredAt, String runTime, String commitMessage, String buildNumber, String buildSlug) {
+    public Build(BuildStatus status, boolean pr, String fromBranch, String toBranch, String triggeredAt, String runTime, String commitMessage, String buildNumber, String buildSlug, String appSlug) {
         this.status = status;
         this.pr = pr;
         this.fromBranch = fromBranch;
@@ -25,9 +28,42 @@ public class Build {
         this.commitMessage = commitMessage;
         this.buildNumber = buildNumber;
         this.buildSlug = buildSlug;
+        this.appSlug = appSlug;
     }
 
     public Build() {
+    }
+
+    public Build(BuildDetails buildDetails) {
+        switch (buildDetails.getStatus()) {
+            case 0:
+                this.status = BuildStatus.IN_PROGRESS;
+                break;
+            case 1:
+                this.status = BuildStatus.SUCCESS;
+                break;
+            case 2:
+                this.status = BuildStatus.FAILED;
+                break;
+            case 3:
+            case 4:
+                this.status = BuildStatus.ABORTED;
+                break;
+        }
+
+        this.pr = !buildDetails.getPullRequestViewUrl().equals("");
+        this.toBranch = buildDetails.getPullRequestTargetBranch();
+        this.fromBranch = buildDetails.getBranch();
+        this.triggeredAt = buildDetails.getTriggeredAt().toString();
+
+        long diffInMilies = Math.abs(buildDetails.getFinishedAt().getTime() - buildDetails.getTriggeredAt().getTime());
+        long diff = TimeUnit.MINUTES.convert(diffInMilies, TimeUnit.MILLISECONDS);
+        this.runTime = Long.toString(diff);
+
+        this.commitMessage = buildDetails.getCommitMessage();
+        this.buildNumber = Integer.toString(buildDetails.getBuildNumber());
+        this.buildSlug = buildDetails.getSlug();
+        this.appSlug = buildDetails.getAppSlug();
     }
 
     public BuildStatus getStatus() {
@@ -102,6 +138,14 @@ public class Build {
         this.buildSlug = buildSlug;
     }
 
+    public String getAppSlug() {
+        return appSlug;
+    }
+
+    public void setAppSlug(String appSlug) {
+        this.appSlug = appSlug;
+    }
+
     public Color getStatusColor() {
         switch (status) {
             case FAILED:
@@ -132,5 +176,21 @@ public class Build {
             default:
                 return "Unknown status";
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Build{" +
+                "status=" + status +
+                ", pr=" + pr +
+                ", fromBranch='" + fromBranch + '\'' +
+                ", toBranch='" + toBranch + '\'' +
+                ", triggeredAt='" + triggeredAt + '\'' +
+                ", runTime='" + runTime + '\'' +
+                ", commitMessage='" + commitMessage + '\'' +
+                ", buildNumber='" + buildNumber + '\'' +
+                ", buildSlug='" + buildSlug + '\'' +
+                ", appSlug='" + appSlug + '\'' +
+                '}';
     }
 }

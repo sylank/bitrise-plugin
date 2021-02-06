@@ -1,7 +1,6 @@
 package io.bitrise.plugins.ui.window.view.builds;
 
-import com.intellij.ui.components.JBTextArea;
-import io.bitrise.plugins.service.BuildService;
+import io.bitrise.plugins.service.BuildLogService;
 import io.bitrise.plugins.ui.model.Build;
 import io.bitrise.plugins.ui.window.view.PluginView;
 import io.bitrise.plugins.ui.window.view.builds.log.BitriseLogStyledDocument;
@@ -13,11 +12,12 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 
 public class BuildDetailsView extends JPanel implements TreeSelectionListener, PluginView {
-    private BuildService buildService;
-    private JBTextArea logArea;
+    private BuildLogService buildLogService;
 
-    public BuildDetailsView(BuildService buildService) {
-        this.buildService = buildService;
+    private JTextPane logTextPane;
+
+    public BuildDetailsView(BuildLogService buildLogService) {
+        this.buildLogService = buildLogService;
     }
 
     @Override
@@ -41,14 +41,15 @@ public class BuildDetailsView extends JPanel implements TreeSelectionListener, P
     public void renderView() {
         setLayout(new BorderLayout());
 
-        JTextPane txt = new JTextPane(new BitriseLogStyledDocument());
-        txt.setText("Demo text");
-        txt.setEditable(false);
-        txt.setDoubleBuffered(true);
-        add(new JScrollPane(txt), BorderLayout.CENTER);
+        logTextPane = new JTextPane(new BitriseLogStyledDocument());
+        logTextPane.setEditable(false);
+        logTextPane.setDoubleBuffered(true);
+        add(new JScrollPane(logTextPane), BorderLayout.CENTER);
     }
 
     private void updateView(Build build) {
+        String buildLog = buildLogService.getBuildLogsByAppSlugAndBuildId(build.getAppSlug(), build.getBuildSlug());
 
+        logTextPane.setText(buildLog);
     }
 }

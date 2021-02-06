@@ -18,19 +18,19 @@ public class BitriseLogStyledDocument extends DefaultStyledDocument {
 
     public static final Pair<String, Color> BLACK = new Pair<>("[30;1m", JBColor.black);   // BLACK
     public static final Pair<String, Color> RED = new Pair<>("[31;1m", JBColor.red);
-    ;     // RED
+    // RED
     public static final Pair<String, Color> GREEN = new Pair<>("[32;1m", JBColor.green);
-    ;   // GREEN
+    // GREEN
     public static final Pair<String, Color> YELLOW = new Pair<>("[33;1m", JBColor.yellow);
-    ;  // YELLOW
+    // YELLOW
     public static final Pair<String, Color> BLUE = new Pair<>("[34;1m", JBColor.blue);
-    ;    // BLUE
+    // BLUE
     public static final Pair<String, Color> PURPLE = new Pair<>("[35;1m", JBColor.pink);
-    ;  // PURPLE
+    // PURPLE
     public static final Pair<String, Color> CYAN = new Pair<>("[36;1m", JBColor.cyan);
-    ;    // CYAN
+    // CYAN
     public static final Pair<String, Color> WHITE = new Pair<>("[37;1m", JBColor.white);
-    ;   // WHITE
+    // WHITE
 
     public static final Pair[] COLORS = {
             BLACK,
@@ -47,13 +47,23 @@ public class BitriseLogStyledDocument extends DefaultStyledDocument {
 
     int from = 0;
 
-
     @Override
     public void insertString(int offs, String str, AttributeSet a) {
+        // TODO: Fix this freaking hack
         try {
             super.insertString(from, str, a);
         } catch (BadLocationException e) {
             e.printStackTrace();
+
+            from = 0;
+
+            try {
+                super.insertString(from, str, a);
+            } catch (BadLocationException ex) {
+                ex.printStackTrace();
+
+                return;
+            }
         }
 
         StringBuffer text;
