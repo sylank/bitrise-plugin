@@ -2,6 +2,7 @@ package io.bitrise.plugins.ui.window.view.builds;
 
 import com.intellij.ui.JBColor;
 import io.bitrise.plugins.service.BuildLogService;
+import io.bitrise.plugins.ui.context.UiApplicationContext;
 import io.bitrise.plugins.ui.model.Build;
 import io.bitrise.plugins.ui.window.view.PluginView;
 
@@ -18,8 +19,8 @@ public class BuildDetailsView extends JPanel implements TreeSelectionListener, P
 
     private JTextPane logTextPane;
 
-    public BuildDetailsView(BuildLogService buildLogService) {
-        this.buildLogService = buildLogService;
+    public BuildDetailsView(UiApplicationContext uiApplicationContext) {
+        this.buildLogService = uiApplicationContext.getBuildLogService();
     }
 
     @Override
