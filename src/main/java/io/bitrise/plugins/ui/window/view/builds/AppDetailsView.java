@@ -4,6 +4,7 @@ package io.bitrise.plugins.ui.window.view.builds;
 import io.bitrise.plugins.service.AppService;
 import io.bitrise.plugins.service.BuildService;
 import io.bitrise.plugins.service.DefaultBuildService;
+import io.bitrise.plugins.ui.context.UiApplicationContext;
 import io.bitrise.plugins.ui.component.PluginSettings;
 import io.bitrise.plugins.ui.model.App;
 import io.bitrise.plugins.ui.model.Build;
@@ -22,9 +23,9 @@ public class AppDetailsView extends JPanel implements PluginView {
     private BuildService buildService;
     private TreeSelectionListener treeSelectionListener;
 
-    public AppDetailsView(AppService appService, BuildService buildService, TreeSelectionListener treeSelectionListener) {
-        this.appService = appService;
-        this.buildService = buildService;
+    public AppDetailsView(UiApplicationContext uiApplicationContext, TreeSelectionListener treeSelectionListener) {
+        this.appService = uiApplicationContext.getAppService();
+        this.buildService = uiApplicationContext.getBuildService();
         this.treeSelectionListener = treeSelectionListener;
     }
 

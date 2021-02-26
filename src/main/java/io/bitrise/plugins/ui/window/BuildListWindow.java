@@ -1,8 +1,6 @@
 package io.bitrise.plugins.ui.window;
 
-import io.bitrise.plugins.service.AppService;
-import io.bitrise.plugins.service.BuildLogService;
-import io.bitrise.plugins.service.BuildService;
+import io.bitrise.plugins.ui.context.UiApplicationContext;
 import io.bitrise.plugins.ui.window.view.builds.AppDetailsView;
 import io.bitrise.plugins.ui.window.view.builds.BuildDetailsView;
 
@@ -11,14 +9,10 @@ import java.awt.*;
 import java.io.IOException;
 
 public class BuildListWindow implements PluginWindow {
-    private AppService appService;
-    private BuildService buildService;
-    private BuildLogService buildLogService;
+    private UiApplicationContext uiApplicationContext;
 
-    public BuildListWindow(AppService appService, BuildService buildService, BuildLogService buildLogService) {
-        this.appService = appService;
-        this.buildService = buildService;
-        this.buildLogService = buildLogService;
+    public BuildListWindow(UiApplicationContext uiApplicationContext) {
+        this.uiApplicationContext = uiApplicationContext;
     }
 
     @Override
@@ -32,8 +26,8 @@ public class BuildListWindow implements PluginWindow {
     }
 
     private JComponent createMainPanel() throws IOException {
-        BuildDetailsView buildDetailsView = new BuildDetailsView(buildLogService);
-        AppDetailsView appDetailsView = new AppDetailsView(appService, buildService, buildDetailsView);
+        BuildDetailsView buildDetailsView = new BuildDetailsView(uiApplicationContext);
+        AppDetailsView appDetailsView = new AppDetailsView(uiApplicationContext, buildDetailsView);
 
         buildDetailsView.renderView();
         appDetailsView.renderView();
